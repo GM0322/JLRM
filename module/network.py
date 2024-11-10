@@ -565,8 +565,6 @@ class resassignnetwork2(torch.nn.Module):
         self.relu = torch.nn.ReLU()
 
     def forward(self,input):
-        # x.data.cpu().numpy().tofile('1.raw')
-        # input.data.cpu().numpy().tofile('0.raw')
         x = self.pre(input)
         out = self.post(self.conv(x))
         # out[out > 1.0] = 1.0
@@ -575,5 +573,4 @@ class resassignnetwork2(torch.nn.Module):
         out[out<0.1] = 0.0
         gfilter = guass_filter_model().cuda(input.device)
         out_ = gfilter(out)
-        # out_ = out
         return out,out_
