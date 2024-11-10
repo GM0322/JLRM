@@ -210,6 +210,22 @@ class GroupUNet(torch.nn.Module):
                         torch.nn.Conv2d(
                             in_channels=out_channels,
                             out_channels=out_channels,
+                            kernel_size=1,
+                            padding=0,
+                            bias=True,
+                        ),
+                    ),
+                    (
+                        block_name + "bn_2",
+                        torch.nn.GroupNorm(num_groups, out_channels),
+                    ),
+                    (block_name + "relu2", torch.nn.ReLU(True)),
+                    (block_name + "dr2", torch.nn.Dropout(p=drop_factor)),
+                    (
+                        block_name + "conv2",
+                        torch.nn.Conv2d(
+                            in_channels=out_channels,
+                            out_channels=out_channels,
                             kernel_size=3,
                             padding=1,
                             bias=True,
